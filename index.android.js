@@ -1,30 +1,27 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * HCY React Native APP
+ * https://github.com/binggg/HCY-React-Native
  */
 'use strict';
-
-const React = require('react-native');
-const {
-        Component,
-        AppRegistry,
-        View,
-        Text
-    } = React;
-
+import React, {
+    Component,
+    AppRegistry,
+    View,
+    Text
+} from 'react-native';
 import { Provider } from 'react-redux';
-import configureStore from './configureStore';
-
-import getRoute from './routers';
+import configureStore from './configureStore.js';
+import getRoute from './routers.js';
 
 const store = configureStore();
 
+
 class hcy extends Component {
     render() {
-        let compoent = getRoute(store);
+        let component = getRoute(store);
         return (
             <Provider store={store}>
-                {compoent}
+                {component}
             </Provider>
         )
     }
