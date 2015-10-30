@@ -1,0 +1,1 @@
+export const API_SPLASH = 'http://beta.json-generator.com/api/json/get/E1j_b6iWg';

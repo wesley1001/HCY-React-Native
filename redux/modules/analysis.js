@@ -1,6 +1,3 @@
-/**
- * Created by binggg on 15-10-27.
- */
 import createReducer from '../../utils/createReducer.js'
 import { API_SPLASH } from '../../config.js';
 

@@ -5,11 +5,19 @@ import React, {
     StyleSheet
 } from 'react-native';
 import SplashContainer from './containers/Splash/SplashContainer.js';
+import AnalysisContainer from './containers/Analysis/AnalysisContainer.js';
 
 export default store => {
     let initialRoute = {name: 'splash'};
+    return (
+        <Navigator
+            initialRoute={initialRoute}
+            configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+            renderScene={RouteMapper}
+            />
+    );
 
-    const RouteMapper = function (route, navigator) {
+    function RouteMapper(route, navigator) {
         switch (route.name) {
             case 'splash':
                 return (
@@ -17,32 +25,16 @@ export default store => {
                 );
             case 'home':
                 return (
-                    <View style={styles.container}>
-                        <Text>1</Text>
+                    <View>
+                        <Text>home</Text>
                     </View>
                 );
+            case 'analysis':
+                return (
+                    <AnalysisContainer dispatch={store.dispatch} navigator={navigator}/>
+                );
+
 
         }
-    };
-
-    return (
-        <Navigator
-            initialRoute={initialRoute}
-            configureScene={() => Navigator.SceneConfigs.FadeAndroid}
-            renderScene={RouteMapper}
-            />
-    )
+    }
 }
-
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});

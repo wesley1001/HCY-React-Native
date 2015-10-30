@@ -1,12 +1,12 @@
 import React, { Component } from 'react-native';
 import { connect } from 'react-redux';
-import Splash from '../../components/Splash.js';
-import { loadSplash, finishSplash } from '../../redux/modules/splash.js';
+import Analysis from '../../components/Analysis.js';
+//import { loadSP, finishAnalysis } from '../../redux/modules/analysis.js';
 
-class SplashContainer extends Component {
+class AnalysisContainer extends Component {
     componentDidMount() {
         const { dispatch, navigator } = this.props;
-        dispatch(loadSplash());
+        //dispatch(loadAnalysis());
         //setTimeout(function(){
         //    navigator.push({name: 'home'});
         //},1000)
@@ -15,13 +15,13 @@ class SplashContainer extends Component {
     render() {
         const { splash, dispatch, navigator } = this.props;
         return (
-            <Splash splash={splash} onSkip={()=>{this.handleCLick(dispatch, navigator)}}/>
+            <Analysis splash={splash} onSkip={()=>{this.handleCLick(dispatch, navigator)}}/>
         )
     }
 
     handleCLick(dispatch, navigator) {
-        navigator.push({name: 'analysis'});
-        dispatch(finishSplash())
+        navigator.push({name: 'home'});
+        //dispatch(finishAnalysis())
     }
 }
 
@@ -33,4 +33,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(SplashContainer);
+export default connect(mapStateToProps)(AnalysisContainer);
