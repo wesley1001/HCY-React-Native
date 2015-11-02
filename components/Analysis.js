@@ -18,14 +18,21 @@ import MK, {
     MKRadioButton,
     MKCardStyles
 } from 'react-native-material-kit';
-console.log(MKColor, MKCardStyles);
+import HCYRadioGroup from './HCYRadioGroup.js';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
+const ColoredRaisedButton = MKButton.coloredButton()
+    .withText('BUTTON')
+    .withOnPress(() => {
+        console.log("Hi, it's a colored button!");
+    })
+    .build();
+
 
 export default class Analysis extends Component {
     render() {
-        const { splash, onSkip } = this.props;
+        const { conditions, onSkip } = this.props;
         const actions = [
             {
                 title: '返回',
@@ -41,25 +48,31 @@ export default class Analysis extends Component {
                     logo={{uri:'http://placehold.it/'+ PixelRatio.get() * 48}}
                     title={'HCY'}
                     actions={actions}/>
-                <ViewPagerAndroid
+                {conditions && <ViewPagerAndroid
                     style={styles.viewpager}
                     initialPage={0}>
-                    <View style={styles.innerContent}>
-                        <Text>Lorem ipsum dolor sit amet.</Text>
-                        <MKButton
-                            backgroundColor={MKColor.transparent}
-                            onPress={() => {
-                            console.log('press')
-                        }}>
-                        </MKButton>
-                        <MKSlider></MKSlider>
-
-                    </View>
-                    <View>
-                        <Text>2</Text>
-                        <MKRadioButton checked={true}/>
-                    </View>
-                </ViewPagerAndroid>
+                    {conditions.map((condition) => (
+                        <ScrollView key={condition._id}>
+                            <Text style={styles.title}>{condition.title}</Text>
+                            {condition.questions.map((question) => (
+                                <View style={styles.question} key={question._id}>
+                                    <Text style={styles.questionName}>{question.name}</Text>
+                                    <View style={styles.items}>
+                                        <HCYRadioGroup>
+                                        {question.items.map((item) => (
+                                            <View key={item._id} style={styles.item}>
+                                                <Image style={styles.icon} source={{uri: item.img}}/>
+                                                <MKRadioButton group={this.radioGroup} />
+                                                <Text>{item.text}</Text>
+                                            </View>
+                                        ))}
+                                        </HCYRadioGroup>
+                                    </View>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    ))}
+                </ViewPagerAndroid>}
             </View>
         )
     }
@@ -83,8 +96,34 @@ var styles = StyleSheet.create({
     innerContent: {
         padding: 16
     },
+    title: {
+        textAlign: 'center',
+        fontSize: 18,
+    },
     buttonText: {
         fontWeight: 'bold',
         color: MKColor.Pink
+    },
+    question: {
+        flex: 1
+    },
+    questionName: {
+        marginTop: 24,
+        marginBottom: 16,
+        textAlign: 'center'
+    },
+    items: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    item: {
+        width: WINDOW_WIDTH / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    icon: {
+        width: 100,
+        height: 68
     }
 });

@@ -1,43 +1,27 @@
 import createReducer from '../../utils/createReducer.js'
-import { API_SPLASH } from '../../config.js';
+import { API_CONDITIONS } from '../../config.js';
 
-export const LOAD_SPLASH_REQUEST = 'LOAD_SPLASH_REQUEST';
-export const LOAD_SPLASH_SUCCESS = 'LOAD_SPLASH_SUCCESS';
-export const LOAD_SPLASH_FAILURE = 'LOAD_SPLASH_FAILURE';
-export const FINISH_SPLASH = 'FINISH_SPLASH';
+export const LOAD_CONDITIONS_REQUEST = 'LOAD_CONDITIONS_REQUEST';
+export const LOAD_CONDITIONS_SUCCESS = 'LOAD_CONDITIONS_SUCCESS';
+export const LOAD_CONDITIONS_FAILURE = 'LOAD_CONDITIONS_FAILURE';
 
-export const splash = createReducer(null, {
-    [LOAD_SPLASH_REQUEST](state, action) {
+export const conditions = createReducer(null, {
+    [LOAD_CONDITIONS_REQUEST](state, action) {
         return state;
     },
-    [LOAD_SPLASH_SUCCESS](state, action) {
-        const { img, text } = action.json;
-        return Object.assign({}, state, {
-            img,
-            text
-        });
+    [LOAD_CONDITIONS_SUCCESS](state, action) {
+        return action.json;
     },
-    [LOAD_SPLASH_FAILURE](state, action) {
+    [LOAD_CONDITIONS_FAILURE](state, action) {
         return state;
-    },
-    [FINISH_SPLASH](state, action) {
-        return Object.assign({}, state, {
-            splashed: true
-        })
     }
 });
 
-export function loadSplash(Id) {
+export function loadConditions(Id) {
     return {
-        types: [LOAD_SPLASH_REQUEST, LOAD_SPLASH_SUCCESS, LOAD_SPLASH_FAILURE],
-        shouldCallAPI: (state) => !state.splash,
-        callAPI: () => fetch(API_SPLASH),
+        types: [LOAD_CONDITIONS_REQUEST, LOAD_CONDITIONS_SUCCESS, LOAD_CONDITIONS_FAILURE],
+        shouldCallAPI: (state) => !state.conditions,
+        callAPI: () => fetch(API_CONDITIONS),
         payload: {Id}
     };
-}
-
-export function finishSplash() {
-    return {
-        type: FINISH_SPLASH
-    }
 }

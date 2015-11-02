@@ -7,9 +7,20 @@ import React, {
     Dimensions,
     TouchableHighlight
 } from 'react-native';
+import MK, {
+    MKColor,
+    MKButton,
+    MKSlider,
+    MKRadioButton,
+    MKCardStyles
+} from 'react-native-material-kit';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
+const ColoredRaisedButton = MKButton.coloredButton()
+    .withText('ENTER APP')
+    .withBackgroundColor(MKColor.Pink)
+    .build();
 
 export default class Splash extends Component {
     render() {
@@ -17,10 +28,13 @@ export default class Splash extends Component {
 
         return (splash && !splash.splashed &&
             <View style={styles.container}>
-                <TouchableHighlight onPress={onSkip}>
-                    <Text>跳过</Text>
-                </TouchableHighlight>
                 {this.props.splash && <Image style={styles.img} source={{uri: this.props.splash.img}}/>}
+                <View style={styles.body}>
+                    <Image style={styles.logo} source={{uri:'http://img-storage.qiniudn.com/15-11-2/4009175.jpg'}}/>
+                    <View style={styles.buttonGroup}>
+                        <ColoredRaisedButton onPress={onSkip}/>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -35,18 +49,23 @@ var styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     img: {
-        flex: 1,
         width: WINDOW_WIDTH,
-        height: WINDOW_HEIGHT
+        height: WINDOW_HEIGHT*0.68
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    body: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        width: WINDOW_WIDTH
+        //textAlign: 'center'
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+    logo: {
+        width: 136,
+        height: 46,
+        marginBottom: 16
     },
+    buttonGroup: {
+        flexDirection:'row'
+    }
 });
