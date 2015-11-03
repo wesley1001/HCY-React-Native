@@ -9,30 +9,39 @@ import React, {
     TouchableHighlight,
     PixelRatio,
     ViewPagerAndroid,
-    ScrollView
+    ScrollView,
+    ProgressBarAndroid
 } from 'react-native';
 import MK, {
     MKColor,
     MKButton,
     MKSlider,
     MKRadioButton,
-    MKCardStyles
+    MKCardStyles,
+    MKProgress
 } from 'react-native-material-kit';
 import HCYRadioGroup from './HCYRadioGroup.js';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
-const ColoredRaisedButton = MKButton.coloredButton()
-    .withText('BUTTON')
-    .withOnPress(() => {
-        console.log("Hi, it's a colored button!");
-    })
+const VIEW_PAGER_REF = 'VIEW_PAGER_REF';
+
+const SubmitButton = MKButton.coloredButton()
+    .withText('SUBMIT')
+    .withBackgroundColor(MKColor.Pink)
     .build();
 
-
 export default class Analysis extends Component {
+
     render() {
-        const { conditions, onSkip } = this.props;
+        const {
+            conditions,
+            index,
+            finishedCondition,
+            onCurrentConditionChange,
+            onFinish,
+            currentCondition,
+            onReset } = this.props;
         const actions = [
             {
                 title: '返回',
@@ -48,28 +57,50 @@ export default class Analysis extends Component {
                     logo={{uri:'http://placehold.it/'+ PixelRatio.get() * 48}}
                     title={'HCY'}
                     actions={actions}/>
+                {!conditions && <View style={styles.content}>
+                    <ProgressBarAndroid styleAttr="Inverse"/>
+                </View>}
+                {conditions && currentCondition &&
+                <MKProgress
+                    style={styles.progress}
+                    progress={(currentCondition.position + 1) / conditions.length}
+                    />
+                }
                 {conditions && <ViewPagerAndroid
                     style={styles.viewpager}
-                    initialPage={0}>
-                    {conditions.map((condition) => (
+                    ref={VIEW_PAGER_REF}
+                    initialPage={0}
+                    onPageSelected={e=>{onCurrentConditionChange(e.nativeEvent.position)}}>
+                    {conditions.map((condition, conditionIndex) => (
                         <ScrollView key={condition._id}>
                             <Text style={styles.title}>{condition.title}</Text>
-                            {condition.questions.map((question) => (
+                            {condition.questions.map((question, questionIndex) => (
                                 <View style={styles.question} key={question._id}>
                                     <Text style={styles.questionName}>{question.name}</Text>
                                     <View style={styles.items}>
-                                        <HCYRadioGroup>
                                         {question.items.map((item) => (
                                             <View key={item._id} style={styles.item}>
                                                 <Image style={styles.icon} source={{uri: item.img}}/>
-                                                <MKRadioButton group={this.radioGroup} />
+                                                <MKRadioButton
+                                                    group={this.radioGroup}/>
                                                 <Text>{item.text}</Text>
                                             </View>
                                         ))}
-                                        </HCYRadioGroup>
                                     </View>
                                 </View>
                             ))}
+                            <View style={styles.actionArea}>
+                                <SubmitButton
+                                    onPress={e=> {
+                                        onCurrentConditionChange(conditionIndex+1);
+                                        if (conditionIndex < conditions.length-1) {
+                                            this.refs[VIEW_PAGER_REF].setPage(conditionIndex+1);
+                                        } else {
+                                            console.log(conditionIndex, conditions.length);
+                                        }
+                                    }}
+                                />
+                            </View>
                         </ScrollView>
                     ))}
                 </ViewPagerAndroid>}
@@ -88,7 +119,9 @@ var styles = StyleSheet.create({
         height: 56,
     },
     content: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     viewpager: {
         flex: 1
@@ -99,6 +132,7 @@ var styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 18,
+        marginTop: 16,
     },
     buttonText: {
         fontWeight: 'bold',
@@ -108,8 +142,8 @@ var styles = StyleSheet.create({
         flex: 1
     },
     questionName: {
-        marginTop: 24,
-        marginBottom: 16,
+        marginTop: 0,
+        marginBottom: 8,
         textAlign: 'center'
     },
     items: {
@@ -120,10 +154,13 @@ var styles = StyleSheet.create({
         width: WINDOW_WIDTH / 2,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 16
     },
     icon: {
         width: 100,
         height: 68
+    },
+    actionArea: {
+        padding:16
     }
 });

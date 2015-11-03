@@ -1,7 +1,7 @@
 import React, { Component } from 'react-native';
 import { connect } from 'react-redux';
 import Analysis from '../../components/Analysis.js';
-import { loadConditions } from '../../redux/modules/analysis.js';
+import { loadConditions, finishCondition, setCurrentCondition } from '../../redux/modules/analysis.js';
 
 class AnalysisContainer extends Component {
     componentDidMount() {
@@ -10,9 +10,15 @@ class AnalysisContainer extends Component {
     }
 
     render() {
-        const { conditions, dispatch, navigator } = this.props;
+        const { conditions, dispatch, navigator, finishedCondition, currentCondition } = this.props;
         return (
-            <Analysis conditions={conditions} onSkip={()=>{this.handleCLick(dispatch, navigator)}}/>
+            <Analysis
+                conditions={conditions}
+                finishedCondition={finishedCondition}
+                currentCondition={currentCondition}
+                onSkip={()=>{this.handleCLick(dispatch, navigator)}}
+                onCurrentConditionChange={(position)=>{dispatch(setCurrentCondition(position))}}
+                />
         )
     }
 
@@ -22,10 +28,11 @@ class AnalysisContainer extends Component {
 }
 
 function mapStateToProps(state) {
-    const { conditions } = state;
-
+    const { conditions, finishedCondition, currentCondition } = state;
     return {
-        conditions
+        conditions,
+        finishedCondition,
+        currentCondition
     };
 }
 

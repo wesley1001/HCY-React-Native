@@ -5,7 +5,7 @@ import React, {
     Image,
     Component,
     Dimensions,
-    TouchableHighlight
+    ProgressBarAndroid
 } from 'react-native';
 import MK, {
     MKColor,
@@ -26,8 +26,9 @@ export default class Splash extends Component {
     render() {
         const { splash, onSkip } = this.props;
 
-        return (splash && !splash.splashed &&
+        return (
             <View style={styles.container}>
+                {!this.props.splash && <View style={[styles.img, styles.progressContainer]}><ProgressBarAndroid styleAttr="Inverse"/></View>}
                 {this.props.splash && <Image style={styles.img} source={{uri: this.props.splash.img}}/>}
                 <View style={styles.body}>
                     <Image style={styles.logo} source={{uri:'http://img-storage.qiniudn.com/15-11-2/4009175.jpg'}}/>
@@ -47,6 +48,10 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
         backgroundColor: '#F5FCFF',
+    },
+    progressContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     img: {
         width: WINDOW_WIDTH,
