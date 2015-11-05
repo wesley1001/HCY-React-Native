@@ -36,12 +36,11 @@ export default class Analysis extends Component {
     render() {
         const {
             conditions,
-            index,
-            finishedCondition,
-            onCurrentConditionChange,
-            onFinish,
+            questionAnswers,
             currentCondition,
-            onReset } = this.props;
+            onCurrentConditionChange,
+            onAnswerChange
+            } = this.props;
         const actions = [
             {
                 title: '返回',
@@ -64,7 +63,7 @@ export default class Analysis extends Component {
                 <MKProgress
                     style={styles.progress}
                     progress={(currentCondition.position + 1) / conditions.length}
-                    />
+                />
                 }
                 {conditions && <ViewPagerAndroid
                     style={styles.viewpager}
@@ -74,21 +73,31 @@ export default class Analysis extends Component {
                     {conditions.map((condition, conditionIndex) => (
                         <ScrollView key={condition._id}>
                             <Text style={styles.title}>{condition.title}</Text>
-                            {condition.questions.map((question, questionIndex) => (
-                                <View style={styles.question} key={question._id}>
-                                    <Text style={styles.questionName}>{question.name}</Text>
-                                    <View style={styles.items}>
-                                        {question.items.map((item) => (
-                                            <View key={item._id} style={styles.item}>
-                                                <Image style={styles.icon} source={{uri: item.img}}/>
-                                                <MKRadioButton
-                                                    group={this.radioGroup}/>
-                                                <Text>{item.text}</Text>
-                                            </View>
-                                        ))}
+                            {condition.questions.map((question) => {
+                                const radioGroup = new MKRadioButton.Group();
+                                console.log(radioGroup);
+                                return (
+                                    <View style={styles.question} key={question._id}>
+                                        <Text style={styles.questionName}>{question.name}</Text>
+                                        <View style={styles.items}>
+                                            {question.items.map((item) => (
+                                                <View key={item._id} style={styles.item}>
+                                                    <Image style={styles.icon} source={{uri: item.img}}/>
+                                                    <MKRadioButton
+                                                        onPress={(e) => {
+                                                        console.log(e);
+                                                        this.handleRadioPress(onAnswerChange,question._id, item._id, true)
+                                                    }}
+                                                        group={radioGroup}
+                                                    />
+                                                    <Text>{item.text}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
                                     </View>
-                                </View>
-                            ))}
+                                )
+                            })}
+
                             <View style={styles.actionArea}>
                                 <SubmitButton
                                     onPress={e=> {
@@ -106,6 +115,10 @@ export default class Analysis extends Component {
                 </ViewPagerAndroid>}
             </View>
         )
+    }
+
+    handleRadioPress(onAnswerChange, question, answerId, answer) {
+        onAnswerChange(question, answerId, answer)
     }
 }
 
@@ -161,6 +174,6 @@ var styles = StyleSheet.create({
         height: 68
     },
     actionArea: {
-        padding:16
+        padding: 16
     }
 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react-native';
 import { connect } from 'react-redux';
 import Analysis from '../../components/Analysis.js';
-import { loadConditions, finishCondition, setCurrentCondition } from '../../redux/modules/analysis.js';
+import { loadConditions, finishCondition, setCurrentCondition, setQuestionAnswer } from '../../redux/modules/analysis.js';
 
 class AnalysisContainer extends Component {
     componentDidMount() {
@@ -10,30 +10,33 @@ class AnalysisContainer extends Component {
     }
 
     render() {
-        const { conditions, dispatch, navigator, finishedCondition, currentCondition } = this.props;
+        const {
+            conditions,
+            dispatch,
+            navigator,
+            finishedCondition,
+            currentCondition,
+            questionAnswers
+            } = this.props;
         return (
             <Analysis
                 conditions={conditions}
                 finishedCondition={finishedCondition}
                 currentCondition={currentCondition}
-                onSkip={()=>{this.handleCLick(dispatch, navigator)}}
+                questionAnswers={questionAnswers}
                 onCurrentConditionChange={(position)=>{dispatch(setCurrentCondition(position))}}
-                />
+                onAnswerChange={(question,answerId,anwser)=>{dispatch(setQuestionAnswer(question,answerId,anwser))}}
+            />
         )
-    }
-
-    handleCLick(dispatch, navigator) {
-        navigator.push({name: 'home'});
     }
 }
 
 function mapStateToProps(state) {
-    const { conditions, finishedCondition, currentCondition } = state;
     return {
         conditions,
         finishedCondition,
-        currentCondition
-    };
+        currentCondition,
+    } = state;
 }
 
 export default connect(mapStateToProps)(AnalysisContainer);

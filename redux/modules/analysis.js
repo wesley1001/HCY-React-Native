@@ -7,6 +7,7 @@ export const LOAD_CONDITIONS_FAILURE = 'LOAD_CONDITIONS_FAILURE';
 export const FINISH_CONDITION = 'FINISH_CONDITION';
 export const RESET_CONDITION = 'RESET_CONDITION';
 export const SET_CURRENT_CONDITION = 'SET_CURRENT_CONDITION';
+export const SET_QUESTION_ANSWER = 'SET_QUESTION_ANSWER';
 
 export const conditions = createReducer(null, {
     [LOAD_CONDITIONS_REQUEST](state, action) {
@@ -39,6 +40,16 @@ export const finishedCondition = createReducer([], {
     }
 });
 
+export const questionAnswers = createReducer({}, {
+    [SET_QUESTION_ANSWER](state, action) {
+        return Object.assign({}, state,{
+            [action.question]: Object.assign({}, state[action.question], {
+                [action.answerId]: action.answer
+            })
+        })
+    }
+});
+
 export function loadConditions(Id) {
     return {
         types: [LOAD_CONDITIONS_REQUEST, LOAD_CONDITIONS_SUCCESS, LOAD_CONDITIONS_FAILURE],
@@ -67,4 +78,13 @@ export function setCurrentCondition(position) {
         position,
         type: SET_CURRENT_CONDITION
     }
+}
+
+export function setQuestionAnswer(question, answerId, answer) {
+    return {
+        question,
+        answerId,
+        answer,
+        type: SET_QUESTION_ANSWER
+    }    
 }
