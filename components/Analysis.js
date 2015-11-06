@@ -18,8 +18,11 @@ import MK, {
     MKSlider,
     MKRadioButton,
     MKCardStyles,
-    MKProgress
+    MKProgress,
+    MKIconToggle
 } from 'react-native-material-kit';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+var myIcon = (<Icon name="rocket" size={30} color="#900" />);
 import HCYRadioGroup from './HCYRadioGroup.js';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -29,6 +32,11 @@ const VIEW_PAGER_REF = 'VIEW_PAGER_REF';
 const SubmitButton = MKButton.coloredButton()
     .withText('SUBMIT')
     .withBackgroundColor(MKColor.Pink)
+    .build();
+
+const FakeRadioButton = MKButton.coloredButton()
+    .withText('PICK')
+    .withBackgroundColor(MKColor.grey)
     .build();
 
 export default class Analysis extends Component {
@@ -72,10 +80,11 @@ export default class Analysis extends Component {
                     onPageSelected={e=>{onCurrentConditionChange(e.nativeEvent.position)}}>
                     {conditions.map((condition, conditionIndex) => (
                         <ScrollView key={condition._id}>
+                            <View>
+                                <Icon name="work" size={30} color="#099" />
+                            </View>
                             <Text style={styles.title}>{condition.title}</Text>
                             {condition.questions.map((question) => {
-                                const radioGroup = new MKRadioButton.Group();
-                                console.log(radioGroup);
                                 return (
                                     <View style={styles.question} key={question._id}>
                                         <Text style={styles.questionName}>{question.name}</Text>
@@ -83,13 +92,20 @@ export default class Analysis extends Component {
                                             {question.items.map((item) => (
                                                 <View key={item._id} style={styles.item}>
                                                     <Image style={styles.icon} source={{uri: item.img}}/>
-                                                    <MKRadioButton
+                                                    <MKIconToggle
+                                                        checked={true}
+                                                        onCheckedChange={this._onIconChecked}
                                                         onPress={(e) => {
-                                                        console.log(e);
                                                         this.handleRadioPress(onAnswerChange,question._id, item._id, true)
                                                     }}
-                                                        group={radioGroup}
-                                                    />
+                                                    >
+                                                        <Text pointerEvents="none"
+                                                              style={styles.toggleTextOff}>Off</Text>
+                                                        <Text state_checked={true}
+                                                              pointerEvents="none"
+                                                              style={[styles.toggleText, styles.toggleTextOn]}>On</Text>
+                                                    </MKIconToggle>
+
                                                     <Text>{item.text}</Text>
                                                 </View>
                                             ))}
