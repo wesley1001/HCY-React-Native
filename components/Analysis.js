@@ -21,9 +21,8 @@ import MK, {
     MKProgress,
     MKIconToggle
 } from 'react-native-material-kit';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-var myIcon = (<Icon name="rocket" size={30} color="#900" />);
-import HCYRadioGroup from './HCYRadioGroup.js';
+import MDI from './MDI';
+
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -60,10 +59,10 @@ export default class Analysis extends Component {
             <View style={styles.container}>
                 <ToolbarAndroid
                     style={styles.toolbar}
-                    navIcon={{uri:'http://placehold.it/'+ PixelRatio.get() * 48}}
-                    logo={{uri:'http://placehold.it/'+ PixelRatio.get() * 48}}
-                    title={'HCY'}
-                    actions={actions}/>
+                    actions={actions}>
+                    <MDI name="baby" size={20} color="#4F8EF7" />
+                    <Text>Analysis</Text>
+                </ToolbarAndroid>
                 {!conditions && <View style={styles.content}>
                     <ProgressBarAndroid styleAttr="Inverse"/>
                 </View>}
@@ -80,9 +79,6 @@ export default class Analysis extends Component {
                     onPageSelected={e=>{onCurrentConditionChange(e.nativeEvent.position)}}>
                     {conditions.map((condition, conditionIndex) => (
                         <ScrollView key={condition._id}>
-                            <View>
-                                <Icon name="work" size={30} color="#099" />
-                            </View>
                             <Text style={styles.title}>{condition.title}</Text>
                             {condition.questions.map((question) => {
                                 return (
