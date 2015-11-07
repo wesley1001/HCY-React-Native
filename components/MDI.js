@@ -7,7 +7,7 @@
 'use strict';
 
 import createIconSet from 'react-native-vector-icons/lib/create-icon-set';
-var glyphMap = {
+export const glyphMap = {
   "access-point": 61697,
   "access-point-network": 61698,
   "account": 61699,
@@ -1351,8 +1351,4 @@ var glyphMap = {
   "zip-box": 63037
 };
 
-var MDI = createIconSet(glyphMap, 'Material Design Icons', 'Fonts/materialdesignicons-webfont.ttf');
-
-module.exports = MDI;
-module.exports.glyphMap = glyphMap;
-
+export default createIconSet(glyphMap, 'Material Design Icons', 'Fonts/materialdesignicons-webfont.ttf');
