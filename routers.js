@@ -6,6 +6,7 @@ import React, {
 } from 'react-native';
 import SplashContainer from './containers/Splash/SplashContainer.js';
 import AnalysisContainer from './containers/Analysis/AnalysisContainer.js';
+import MaterialDesign from './components/MaterialDesign.js';
 
 export default store => {
     let initialRoute = {name: 'splash'};
@@ -33,8 +34,10 @@ export default store => {
                 return (
                     <AnalysisContainer dispatch={store.dispatch} navigator={navigator}/>
                 );
-
-
+            case 'test':
+                return (
+                    <MaterialDesign />
+                );
         }
     }
 }

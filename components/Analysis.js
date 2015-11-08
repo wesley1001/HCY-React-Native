@@ -22,7 +22,7 @@ import MK, {
     MKIconToggle
 } from 'react-native-material-kit';
 import MDI from './MDI';
-import { typography } from  'react-native-material-design-styles';
+import { typography } from 'react-native-material-design-styles';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -39,8 +39,8 @@ const FakeRadioButton = MKButton.coloredButton()
 
 export default class Analysis extends Component {
 
-    componentDidMount(){
-        MDI.getImageSource('baby', 20, 'red').then((source) => this.setState({ babyIcon: source }));
+    componentDidMount() {
+        MDI.getImageSource('baby', 20, 'red').then((source) => this.setState({babyIcon: source}));
     }
 
     render() {
@@ -66,7 +66,7 @@ export default class Analysis extends Component {
                     style={styles.toolbar}
                     actions={actions}>
                     <MDI name="auto-fix" size={24} color="#000" style={{opacity:.54}}/>
-                    <Text>Analysis</Text>
+                    <Text style={typographyStyle.paperFontSubhead}>Analysis</Text>
                 </ToolbarAndroid>
                 {!conditions && <View style={styles.content}>
                     <ProgressBarAndroid styleAttr="Inverse"/>
@@ -75,9 +75,8 @@ export default class Analysis extends Component {
                 <MKProgress
                     style={styles.progress}
                     progress={(currentCondition.position + 1) / conditions.length}
-                />
+                    />
                 }
-                <Text style={typography.paperFontDisplay3}>11</Text>
                 {conditions && <ViewPagerAndroid
                     style={styles.viewpager}
                     ref={VIEW_PAGER_REF}
@@ -85,7 +84,7 @@ export default class Analysis extends Component {
                     onPageSelected={e=>{onCurrentConditionChange(e.nativeEvent.position)}}>
                     {conditions.map((condition, conditionIndex) => (
                         <ScrollView key={condition._id}>
-                            <Text style={styles.title}>{condition.title}</Text>
+                            <Text style={typographyStyle.paperFontTitle}>{condition.title}</Text>
                             {condition.questions.map((question) => {
                                 return (
                                     <View style={styles.question} key={question._id}>
@@ -100,7 +99,7 @@ export default class Analysis extends Component {
                                                         onPress={(e) => {
                                                         this.handleRadioPress(onAnswerChange,question._id, item._id, true)
                                                     }}
-                                                    >
+                                                        >
                                                         <Text pointerEvents="none"
                                                               style={styles.toggleTextOff}>Off</Text>
                                                         <Text state_checked={true}
@@ -126,7 +125,7 @@ export default class Analysis extends Component {
                                             console.log(conditionIndex, conditions.length);
                                         }
                                     }}
-                                />
+                                    />
                             </View>
                         </ScrollView>
                     ))}
@@ -140,8 +139,6 @@ export default class Analysis extends Component {
     }
 }
 
-
-var a = StyleSheet.create({"paperFontCommonBase":{"fontFamily":"'Roboto','Noto',sans-serif"},"paperFontCommonCode":{"fontFamily":"'RobotoMono','Consolas','Menlo',monospace"},"paperFontCommonExpensiveKerning":{},"paperFontCommonNowrap":{},"paperFontDisplay4":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":112,"fontWeight":300,"letterSpacing":-0.044,"lineHeight":120},"paperFontDisplay3":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":56,"fontWeight":400,"letterSpacing":-0.026,"lineHeight":60},"paperFontDisplay2":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":45,"fontWeight":400,"letterSpacing":-0.018,"lineHeight":48},"paperFontDisplay1":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":34,"fontWeight":400,"letterSpacing":-0.01,"lineHeight":40},"paperFontHeadline":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":24,"fontWeight":400,"letterSpacing":-0.012,"lineHeight":32},"paperFontTitle":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":20,"fontWeight":500,"lineHeight":28},"paperFontSubhead":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":16,"fontWeight":400,"lineHeight":24},"paperFontBody2":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":14,"fontWeight":500,"lineHeight":24},"paperFontBody1":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":14,"fontWeight":400,"lineHeight":20},"paperFontCaption":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":12,"fontWeight":400,"letterSpacing":0.011,"lineHeight":20},"paperFontMenu":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":13,"fontWeight":500,"lineHeight":24},"paperFontButton":{"fontFamily":"'Roboto','Noto',sans-serif","fontSize":14,"fontWeight":500,"letterSpacing":0.018,"lineHeight":24},"paperFontCode2":{"fontFamily":"'RobotoMono','Consolas','Menlo',monospace","fontSize":14,"fontWeight":700,"lineHeight":20},"paperFontCode1":{"fontFamily":"'RobotoMono','Consolas','Menlo',monospace","fontSize":14,"fontWeight":500,"lineHeight":20}});
 var styles = StyleSheet.create({
     container: {
         backgroundColor: '#f0f0f0',
@@ -196,3 +193,5 @@ var styles = StyleSheet.create({
         padding: 16
     }
 });
+
+const typographyStyle = StyleSheet.create(typography);
