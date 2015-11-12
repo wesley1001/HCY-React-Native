@@ -9,7 +9,7 @@ import AnalysisContainer from './containers/Analysis/AnalysisContainer.js';
 import MaterialDesign from './components/MaterialDesign.js';
 
 export default store => {
-    let initialRoute = {name: 'splash'};
+    let initialRoute = {name: 'test'};
     return (
         <Navigator
             initialRoute={initialRoute}

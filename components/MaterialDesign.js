@@ -4,7 +4,8 @@ import React, {
     View,
     ScrollView,
     Text,
-    Dimensions
+    Dimensions,
+    PropTypes
 } from 'react-native';
 import { typography,color } from 'react-native-material-design-styles';
 const typographyStyle = StyleSheet.create(typography);
@@ -14,19 +15,100 @@ const W_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     page: {
         width: W_WIDTH,
-        height: W_HEIGHT - 20
+        height: W_HEIGHT - 20,
     },
     colorItem: {
-        flex:1
+        flex: 1
     }
 });
-
-console.log(color);
+import RadioButton from './RadioButton';
+import RadioButtonGroup from './CheckboxGroup';
+import Checkbox from './Checkbox';
+import CheckboxGroup from './CheckboxGroup';
 
 export default class MaterialDesign extends Component {
-    render() {
+    state = {};
+    render = () => {
         return (
             <ScrollView>
+                <View style={styles.page}>
+                    <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Checkbox</Text>
+
+                    <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    <View style={{
+                        padding: 16,
+                        flex:1
+                    }}>
+                        <CheckboxGroup ref="CheckboxGroup1" name="group2" onSelect={(value) => {
+                            this.setState({group2Selected: value});
+                        }}>
+                            <Checkbox value="1" label="Checkbox On" checked={true}/>
+                            <Checkbox value="2" label="Checkbox Off"/>
+                            <Checkbox value="3" label="Checkbox Disabled" disabled={true}/>
+                            <Checkbox value="4" label="Checkbox Disabled" disabled={true}/>
+                            <Checkbox value="5" />
+                            <Checkbox value="6"/>
+                        </CheckboxGroup>
+
+                        <Text>Selected {this.state.group2Selected}</Text>
+                        <Text onPress={()=>{this.refs.CheckboxGroup1.value = 2}}>Press to select 2</Text>
+                    </View>
+
+                    <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    <View style={{
+                        backgroundColor: color.paperGrey900.color,
+                        padding: 16,
+                        flex:1
+                    }}>
+                        <CheckboxGroup checked="1" theme="dark" name="group2">
+                            <Checkbox value="1" label="Checkbox On" checked={true}/>
+                            <Checkbox value="2" label="Checkbox Off"/>
+                            <Checkbox value="3" label="Checkbox Disabled" disabled={true}/>
+                            <Checkbox value="4" label="Checkbox Disabled" disabled={true}/>
+                            <Checkbox value="5" />
+                            <Checkbox value="6"/>
+                        </CheckboxGroup>
+                    </View>
+                </View>
+                <View style={styles.page}>
+                    <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>RadioButton</Text>
+
+                    <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    <View style={{
+                        padding: 16,
+                        flex:1
+                    }}>
+                        <RadioButtonGroup ref="Group1" name="group1" onSelect={(value) => {
+                            this.setState({group1Selected: value});
+                        }}>
+                            <RadioButton value="1" label="RadioButton On" checked={true}/>
+                            <RadioButton value="2" label="RadioButton Off"/>
+                            <RadioButton value="3" label="RadioButton Disabled" disabled={true}/>
+                            <RadioButton value="4" label="RadioButton Disabled" disabled={true}/>
+                            <RadioButton value="5" />
+                            <RadioButton value="6"/>
+                        </RadioButtonGroup>
+
+                        <Text>Selected {this.state.group1Selected}</Text>
+                        <Text onPress={()=>{this.refs.Group1.value = 2}}>Press to select 2</Text>
+                    </View>
+
+                    <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    <View style={{
+                        backgroundColor: color.paperGrey900.color,
+                        padding: 16,
+                        flex:1
+                    }}>
+                        <RadioButtonGroup checked="1" theme="dark" name="group2">
+                            <RadioButton value="1" label="RadioButton On" checked={true}/>
+                            <RadioButton value="2" label="RadioButton Off"/>
+                            <RadioButton value="3" label="RadioButton Disabled" disabled={true}/>
+                            <RadioButton value="4" label="RadioButton Disabled" disabled={true}/>
+                            <RadioButton value="5" />
+                            <RadioButton value="6"/>
+                        </RadioButtonGroup>
+                    </View>
+                </View>
                 <View style={styles.page}>
                     <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Typography</Text>
                     <Text style={[typographyStyle.paperFontDisplay4]}>Display4</Text>
