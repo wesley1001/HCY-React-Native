@@ -19,10 +19,13 @@ const styles = StyleSheet.create({
     },
     colorItem: {
         flex: 1
+    },
+    content: {
+        padding: 16
     }
 });
 import RadioButton from './RadioButton';
-import RadioButtonGroup from './CheckboxGroup';
+import RadioButtonGroup from './RadioButtonGroup';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
 
@@ -32,9 +35,13 @@ export default class MaterialDesign extends Component {
         return (
             <ScrollView>
                 <View style={styles.page}>
-                    <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Checkbox</Text>
+                    <View style={styles.content}>
+                        <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Checkbox</Text>
+                    </View>
 
-                    <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    <View style={styles.content}>
+                        <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    </View>
                     <View style={{
                         padding: 16,
                         flex:1
@@ -46,7 +53,7 @@ export default class MaterialDesign extends Component {
                             <Checkbox value="2" label="Checkbox Off"/>
                             <Checkbox value="3" label="Checkbox Disabled" disabled={true}/>
                             <Checkbox value="4" label="Checkbox Disabled" disabled={true}/>
-                            <Checkbox value="5" />
+                            <Checkbox value="5"/>
                             <Checkbox value="6"/>
                         </CheckboxGroup>
 
@@ -54,7 +61,9 @@ export default class MaterialDesign extends Component {
                         <Text onPress={()=>{this.refs.CheckboxGroup1.value = 2}}>Press to select 2</Text>
                     </View>
 
-                    <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    <View style={styles.content}>
+                        <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    </View>
                     <View style={{
                         backgroundColor: color.paperGrey900.color,
                         padding: 16,
@@ -65,15 +74,18 @@ export default class MaterialDesign extends Component {
                             <Checkbox value="2" label="Checkbox Off"/>
                             <Checkbox value="3" label="Checkbox Disabled" disabled={true}/>
                             <Checkbox value="4" label="Checkbox Disabled" disabled={true}/>
-                            <Checkbox value="5" />
+                            <Checkbox value="5"/>
                             <Checkbox value="6"/>
                         </CheckboxGroup>
                     </View>
                 </View>
                 <View style={styles.page}>
-                    <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>RadioButton</Text>
-
-                    <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    <View style={styles.content}>
+                        <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>RadioButton</Text>
+                    </View>
+                    <View style={styles.content}>
+                        <Text style={typographyStyle.paperFontSubhead}>Light Theme</Text>
+                    </View>
                     <View style={{
                         padding: 16,
                         flex:1
@@ -85,7 +97,7 @@ export default class MaterialDesign extends Component {
                             <RadioButton value="2" label="RadioButton Off"/>
                             <RadioButton value="3" label="RadioButton Disabled" disabled={true}/>
                             <RadioButton value="4" label="RadioButton Disabled" disabled={true}/>
-                            <RadioButton value="5" />
+                            <RadioButton value="5"/>
                             <RadioButton value="6"/>
                         </RadioButtonGroup>
 
@@ -93,7 +105,9 @@ export default class MaterialDesign extends Component {
                         <Text onPress={()=>{this.refs.Group1.value = 2}}>Press to select 2</Text>
                     </View>
 
-                    <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    <View style={styles.content}>
+                        <Text style={typographyStyle.paperFontSubhead}>Dark Theme</Text>
+                    </View>
                     <View style={{
                         backgroundColor: color.paperGrey900.color,
                         padding: 16,
@@ -104,14 +118,14 @@ export default class MaterialDesign extends Component {
                             <RadioButton value="2" label="RadioButton Off"/>
                             <RadioButton value="3" label="RadioButton Disabled" disabled={true}/>
                             <RadioButton value="4" label="RadioButton Disabled" disabled={true}/>
-                            <RadioButton value="5" />
+                            <RadioButton value="5"/>
                             <RadioButton value="6"/>
                         </RadioButtonGroup>
                     </View>
                 </View>
-                <View style={styles.page}>
+                <View style={[styles.page,styles.content]}>
                     <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Typography</Text>
-                    <Text style={[typographyStyle.paperFontDisplay4]}>Display4</Text>
+                    <Text style={[typographyStyle.paperFontDisplay4]}>Disp...</Text>
                     <Text style={typographyStyle.paperFontDisplay3}>Display3</Text>
                     <Text style={typographyStyle.paperFontDisplay2}>Display2</Text>
                     <Text style={typographyStyle.paperFontDisplay1}>Display1</Text>
@@ -125,7 +139,7 @@ export default class MaterialDesign extends Component {
                     <Text style={typographyStyle.paperFontCode2}>Code2</Text>
                     <Text style={typographyStyle.paperFontCode1}>Code1</Text>
                 </View>
-                <View style={styles.page}>
+                <View style={[styles.page,styles.content]}>
                     <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Text Color</Text>
                     <Text style={[typographyStyle.paperFontTitle, colorStyle.paperPink500]}>paperPink500</Text>
                     <Text style={[typographyStyle.paperFontTitle, colorStyle.paperPink50]}>paperPink50</Text>
@@ -144,7 +158,9 @@ export default class MaterialDesign extends Component {
                     <Text style={[typographyStyle.paperFontTitle, colorStyle.paperPinkA700]}>paperPinkA700</Text>
                 </View>
                 <View style={styles.page}>
-                    <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Background Color</Text>
+                    <View style={styles.content}>
+                        <Text style={[typographyStyle.paperFontHeadline, colorStyle.paperTeal500]}>Background Color</Text>
+                    </View>
                     <View style={[styles.colorItem,{backgroundColor: color.paperBlue500.color}]}>
                     </View>
                     <View style={[styles.colorItem,{backgroundColor: color.paperBlue50.color}]}>

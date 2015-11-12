@@ -13,12 +13,12 @@ export default class CheckboxGroup extends Component {
         let options = React.Children.map(this.props.children, (option) => {
             let {
                 value,
-                checked,
+                checked
                 } = option.props;
 
-            if (!this.state.selected && checked) {
+            if (checked) {
                 this.state = {
-                    selected: value
+                    selected: [...this.state.selected, value]
                 };
 
                 const { onSelect } = this.props;
@@ -32,9 +32,12 @@ export default class CheckboxGroup extends Component {
         name: PropTypes.string.isRequired,
         theme: PropTypes.string,
         primary: PropTypes.string,
-        onSelect: PropTypes.func
+        onSelect: PropTypes.func,
+        value: PropTypes.array
     };
-    state = {};
+    state = {
+        selected: []
+    };
 
     render = () => {
         let options = React.Children.map(this.props.children, (option) => {
@@ -61,7 +64,7 @@ export default class CheckboxGroup extends Component {
                 primary={primary}
                 disabled={disabled}
                 onCheck={this._onChange}
-                checked={this.state.selected && value == this.state.selected}/>;
+                checked={this.state.selected && this.state.selected.indexOf(value) !== -1}/>;
         }, this);
 
         return (
@@ -71,10 +74,22 @@ export default class CheckboxGroup extends Component {
         );
     };
 
-    _onChange = (value) => {
-        this.setState({
-            selected: value
-        });
+    _onChange = (checked, value) => {
+        const { selected } = this.state;
+
+        if (checked) {
+            this.setState({
+                selected: [...selected, value]
+            });
+        } else {
+            let index = selected.indexOf(value);
+            this.setState({
+                selected: [
+                    ...selected.slice(0, index),
+                    ...selected.slice(index+1)
+                ]
+            });
+        }
 
         const { onSelect } = this.props;
         onSelect && onSelect(this.value);
